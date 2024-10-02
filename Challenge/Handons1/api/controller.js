@@ -37,20 +37,18 @@ exports.calculate = function(req, res) {
       throw new Error("Invalid operation: " + req.query.operation);
     }
 
-  const operand1 = req.query.operand1;
-  const operand2 = req.query.operand2;
+  res.json({ result: operation(req.query.operand1, req.query.operand2) });
+};
 
-// Generate function to check number at least 5 digits and each digit after are incremented by 1
-const checkNumber = (num) => {
-  num = num.toString();
-  if (num.length < 5) {
+exports.hasIncrementalDigits = function(number) {
+  const numStr = number.toString();
+  if (numStr.length <= 5) {
     return false;
   }
-  for (let i = 0; i < num.length - 1; i++) {
-    if (parseInt(num[i]) + 1 !== parseInt(num[i + 1])) {
+  for (let i = 0; i < numStr.length - 1; i++) {
+    if (parseInt(numStr[i]) + 1 !== parseInt(numStr[i + 1])) {
       return false;
     }
   }
   return true;
 }
-
