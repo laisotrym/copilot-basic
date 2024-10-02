@@ -13,6 +13,21 @@
 
       <div id="loading" style="visibility:hidden"></div>
 
+      <!-- 
+
+      This section of the HTML file defines the structure of a calculator interface. 
+      It includes a container with the class "box" that houses another container with the class "calculator". 
+      Inside the calculator container, there is a div with the class "calculator-buttons" which contains multiple button elements. 
+      Each button has a class "btn" and some have additional classes like "span-2". 
+      The buttons are configured with various onClick event handlers to handle different calculator functions such as:
+      - clearPressed(): Clears the current input.
+      - decimalPressed(): Handles the decimal point input.
+      - numberPressed(number): Handles the number input.
+      - operationPressed(operation): Handles the arithmetic operations.
+      - equalPressed(): Computes the result of the arithmetic operation.
+
+      Note: There is a placeholder comment indicating where additional buttons can be added.
+      -->
       <div class="box">
         <div class="calculator">
           <div class="calculator-buttons">
@@ -21,22 +36,25 @@
             <button class="btn" onClick="clearPressed()">CE</button>
             <button class="btn" onClick="decimalPressed()">M</button>
 
-            <button class="btn" onClick="numberPressed(7)">1</button>
-            <button class="btn" onClick="numberPressed(8)">2</button>
-            <button class="btn" onClick="numberPressed(9)">3</button>
+            <button class="btn" onClick="numberPressed(7)">7</button>
+            <button class="btn" onClick="numberPressed(8)">8</button>
+            <button class="btn" onClick="numberPressed(9)">9</button>
 
             <button class="btn" onClick="numberPressed(4)">4</button>
             <button class="btn" onClick="numberPressed(5)">5</button>
             <button class="btn" onClick="numberPressed(6)">6</button>
 
-            <button class="btn" onClick="numberPressed(1)">7</button>
-            <button class="btn" onClick="numberPressed(2)">8</button>
-            <button class="btn" onClick="numberPressed(3)">9</button>
+            <button class="btn" onClick="numberPressed(1)">1</button>
+            <button class="btn" onClick="numberPressed(2)">2</button>
+            <button class="btn" onClick="numberPressed(3)">3</button>
 
             <button class="btn" onClick="numberPressed(0)">0</button>
             <button class="btn" onClick="decimalPressed()">.</button>
 
             <button class="btn" onClick="operationPressed('+')">+</button>
+            <button class="btn" onClick="operationPressed('-')">-</button>
+            <button class="btn" onClick="operationPressed('*')">*</button>
+            <button class="btn" onClick="operationPressed('/')">/</button>
             <!-- add other button  -->
 
             <button class="btn" onClick="equalPressed()">=</button>

@@ -27,6 +27,9 @@ exports.calculate = function(req, res) {
     // TODO: Add operator
     var operations = {
       'add':      function(a, b) { return Number(a) + Number(b) },
+      'subtract': function(a, b) { return Number(a) - Number(b) },
+      'multiply': function(a, b) { return Number(a) * Number(b) },
+      'divide':   function(a, b) { return Number(a) / Number(b) }
     };
 
     var operation = operations[req.query.operation];
@@ -34,5 +37,20 @@ exports.calculate = function(req, res) {
       throw new Error("Invalid operation: " + req.query.operation);
     }
 
-  res.json({ result: operation(req.query.operand1, req.query.operand2) });
-};
+  const operand1 = req.query.operand1;
+  const operand2 = req.query.operand2;
+
+// Generate function to check number at least 5 digits and each digit after are incremented by 1
+const checkNumber = (num) => {
+  num = num.toString();
+  if (num.length < 5) {
+    return false;
+  }
+  for (let i = 0; i < num.length - 1; i++) {
+    if (parseInt(num[i]) + 1 !== parseInt(num[i + 1])) {
+      return false;
+    }
+  }
+  return true;
+}
+
