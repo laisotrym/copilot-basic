@@ -1,5 +1,5 @@
 const { expect } = require('chai');
-const { hasIncrementalDigits } = require('../api/controller');
+const { hasIncrementalDigits } = require('../../api/controller/utils/number');
 
 describe('hasIncrementalDigits', function () {
     it('should return true for a number with incremental digits', function () {

@@ -1,3 +1,21 @@
+
+/**
+ * Handles the calculation based on the provided query parameters.
+ * 
+ * @param {Object} req - The request object.
+ * @param {Object} req.query - The query parameters.
+ * @param {string} req.query.operation - The operation to perform (add, subtract, multiply, divide).
+ * @param {string} req.query.operand1 - The first operand.
+ * @param {string} req.query.operand2 - The second operand.
+ * @param {Object} res - The response object.
+ * 
+ * @throws {Error} If the operation is unspecified.
+ * @throws {Error} If operand1 is invalid.
+ * @throws {Error} If operand2 is invalid.
+ * @throws {Error} If the operation is invalid.
+ * 
+ * @returns {void}
+ */
 exports.calculate = function(req, res) {
   req.app.use(function(err, _req, res, next) {
     if (res.headersSent) {
@@ -40,20 +58,4 @@ exports.calculate = function(req, res) {
   res.json({ result: operation(req.query.operand1, req.query.operand2) });
 };
 
-exports.hasIncrementalDigits = function(number) {
-  const numStr = number.toString();
 
-  // trim all spaces
-  numStr = numStr.replace(/\s/g, '');
-
-  if (numStr.length <= 5) {
-    return false;
-  }
-  
-  for (let i = 0; i < numStr.length - 1; i++) {
-    if (parseInt(numStr[i]) + 1 !== parseInt(numStr[i + 1])) {
-      return false;
-    }
-  }
-  return true;
-}

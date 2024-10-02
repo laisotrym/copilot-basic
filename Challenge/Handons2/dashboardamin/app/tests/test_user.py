@@ -1,0 +1,64 @@
+import unittest
+from app import create_app, db
+from app.user.user_model import User
+
+class UserControllerTestCase(unittest.TestCase):
+    def setUp(self):
+        self.app = create_app()
+        self.app.config['TESTING'] = True
+        self.app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///:memory:'
+        self.client = self.app.test_client()
+
+        with self.app.app_context():
+            db.create_all()
+
+    def tearDown(self):
+        with self.app.app_context():
+            db.session.remove()
+            db.drop_all()
+
+    def test_create_user(self):
+        response = self.client.post('/users/', json={
+            'username': 'testuser',
+            'email': 'test@example.com',
+            'password': 'password'
+        })
+        self.assertEqual(response.status_code, 201)
+
+    def test_get_all_users(self):
+        response = self.client.get('/users/')
+        self.assertEqual(response.status_code, 200)
+
+    def test_get_user(self):
+        user = User(username='testuser', email='test@example.com', password='password')
+        with self.app.app_context():
+            db.session.add(user)
+            db.session.commit()
+
+        response = self.client.get(f'/users/{user.id}')
+        self.assertEqual(response.status_code, 200)
+
+    def test_update_user(self):
+        user = User(username='testuser', email='test@example.com', password='password')
+        with self.app.app_context():
+            db.session.add(user)
+            db.session.commit()
+
+        response = self.client.put(f'/users/{user.id}', json={
+            'username': 'updateduser',
+            'email': 'updated@example.com',
+            'password': 'newpassword'
+        })
+        self.assertEqual(response.status_code, 200)
+
+    def test_delete_user(self):
+        user = User(username='testuser', email='test@example.com', password='password')
+        with self.app.app_context():
+            db.session.add(user)
+            db.session.commit()
+
+        response = self.client.delete(f'/users/{user.id}')
+        self.assertEqual(response.status_code, 204)
+
+if __name__ == '__main__':
+    unittest.main()
