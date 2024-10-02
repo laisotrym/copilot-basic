@@ -6,7 +6,8 @@ user_bp = Blueprint('users_api', __name__)
 @user_bp.route('/users', methods=['GET'])
 def get_all_users():
     users = UserService.get_all_users()
-    return jsonify([user.__dict__ for user in users])
+    # return jsonify([user.__dict__ for user in users])
+    return jsonify([{'id': user.id, 'name': user.username, 'email': user.email} for user in users])
 
 @user_bp.route('/users/<int:user_id>', methods=['GET'])
 def get_user(user_id):
