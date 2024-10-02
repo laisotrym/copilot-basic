@@ -6,25 +6,24 @@ user_bp = Blueprint('users_api', __name__)
 @user_bp.route('/users', methods=['GET'])
 def get_all_users():
     users = UserService.get_all_users()
-    # return jsonify([user.__dict__ for user in users])
-    return jsonify([{'id': user.id, 'name': user.username, 'email': user.email} for user in users])
+    return jsonify([user.to_dict() for user in users])
 
 @user_bp.route('/users/<int:user_id>', methods=['GET'])
 def get_user(user_id):
     user = UserService.get_user_by_id(user_id)
-    return jsonify(user.__dict__) if user else ('', 404)
+    return jsonify(user.to_dict()) if user else ('', 404)
 
 @user_bp.route('/users', methods=['POST'])
 def create_user():
     data = request.get_json()
     user = UserService.create_user(data)
-    return jsonify(user.__dict__), 201
+    return jsonify(user.to_dict()), 201
 
 @user_bp.route('/users/<int:user_id>', methods=['PUT'])
 def update_user(user_id):
     data = request.get_json()
     user = UserService.update_user(user_id, data)
-    return jsonify(user.__dict__) if user else ('', 404)
+    return jsonify(user.to_dict()) if user else ('', 404)
 
 @user_bp.route('/users/<int:user_id>', methods=['DELETE'])
 def delete_user(user_id):
