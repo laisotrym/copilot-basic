@@ -42,9 +42,14 @@ exports.calculate = function(req, res) {
 
 exports.hasIncrementalDigits = function(number) {
   const numStr = number.toString();
+
+  // trim all spaces
+  numStr = numStr.replace(/\s/g, '');
+
   if (numStr.length <= 5) {
     return false;
   }
+  
   for (let i = 0; i < numStr.length - 1; i++) {
     if (parseInt(numStr[i]) + 1 !== parseInt(numStr[i + 1])) {
       return false;
