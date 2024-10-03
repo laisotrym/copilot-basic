@@ -3,7 +3,7 @@ from app import create_app, db
 from app.user.model import User
 
 
-class UserControllerTestCase(unittest.TestCase):
+class UsersApiTestCase(unittest.TestCase):
     def setUp(self):
         self.app = create_app()
         self.app.config['TESTING'] = True

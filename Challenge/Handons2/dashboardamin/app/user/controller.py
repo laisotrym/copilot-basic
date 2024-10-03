@@ -3,6 +3,7 @@ from app.user.service import UserService
 
 user_bp = Blueprint('users_api', __name__)
 
+
 @user_bp.route('/users', methods=['GET'])
 def get_all_users():
     users = UserService.get_all_users()
@@ -36,6 +37,7 @@ def update_user(user_id):
     data = request.get_json()
     user = UserService.update_user(user_id, data)
     return jsonify(user.to_dict()) if user else ('', 404)
+
 
 @user_bp.route('/users/<int:user_id>', methods=['DELETE'])
 def delete_user(user_id):

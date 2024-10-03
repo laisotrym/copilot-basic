@@ -24,3 +24,7 @@ class UserRepository:
     def delete_user(user):
         db.session.delete(user)
         db.session.commit()
+
+    @classmethod
+    def get_user_by_email(email):
+        return User.query.filter_by(email=email).first()

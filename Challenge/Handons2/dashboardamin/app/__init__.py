@@ -2,15 +2,20 @@ from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 
-app = Flask(__name__)
-app.config.from_object('app.config.Config')
+db = SQLAlchemy()
+migrate = Migrate()
 
-# Initialize the database
-db = SQLAlchemy(app)
-migrate = Migrate(app, db)
 
-# Import your models here
-from app.user.model import User  # Adjust the import according to your project structure
+def create_app():
+    app = Flask(__name__)
+    app.config.from_object('app.config.Config')
 
-if __name__ == '__main__':
-    app.run(debug=True)
+    # Initialize the database
+    db.init_app(app)
+    migrate.init_app(app, db)
+
+    # Register the blueprints / url
+    from app.user.controller import user_bp
+    app.register_blueprint(user_bp, url_prefix='/api')
+
+    return app
