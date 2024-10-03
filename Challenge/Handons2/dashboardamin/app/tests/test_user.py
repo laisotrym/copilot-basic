@@ -1,25 +1,10 @@
 import unittest
 from app import create_app, db
+from app.tests.basetest import BaseTestCase
 from app.user.model import User
 
 
-class UsersApiTestCase(unittest.TestCase):
-    def setUp(self):
-        config = {
-            'TESTING': True,
-            # 'SQLALCHEMY_DATABASE_URI': 'sqlite:///:memory:'
-            'SQLALCHEMY_DATABASE_URI': 'sqlite:///shopeetest.db'
-        }
-        self.app = create_app(config)
-        self.client = self.app.test_client()
-
-        with self.app.app_context():
-            db.create_all()
-
-    def tearDown(self):
-        with self.app.app_context():
-            db.session.remove()
-            db.drop_all()
+class UsersApiTestCase(BaseTestCase):
 
     def test_create_user(self):
         response = self.client.post('/api/users', json={
