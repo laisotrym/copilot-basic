@@ -26,5 +26,5 @@ class UserRepository:
         db.session.commit()
 
     @classmethod
-    def get_user_by_email(email):
+    def get_user_by_email(cls, email):
         return User.query.filter_by(email=email).first()
