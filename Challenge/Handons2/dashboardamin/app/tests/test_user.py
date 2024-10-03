@@ -26,9 +26,24 @@ class UserControllerTestCase(unittest.TestCase):
         })
         self.assertEqual(response.status_code, 201)
 
+        response_data = response.get_json()
+        self.assertIn('id', response_data)
+
     def test_get_all_users(self):
-        response = self.client.get('/api/users')
-        self.assertEqual(response.status_code, 200)
+        # insert 2 users into the database
+        user1 = User(username='testuser1', email='test1@example.com', password='password')
+        user2 = User(username='testuser2', email='test2@example.com', password='password')
+        with self.app.app_context():
+            db.session.add(user1)
+            db.session.add(user2)
+            db.session.commit()
+
+            response = self.client.get('/api/users')
+            self.assertEqual(response.status_code, 200)
+
+            # assert in response data there are 2 users
+            response_data = response.get_json()
+            self.assertEqual(len(response_data), 2)
 
     def test_get_user(self):
         user = User(username='testuser', email='test@example.com', password='password')

@@ -1,6 +1,7 @@
 from app.user.repository import UserRepository
 from app.user.model import User
 
+
 # smart logic
 class UserService:
     @staticmethod
@@ -14,6 +15,14 @@ class UserService:
     @staticmethod
     def create_user(data):
         # 1. create user in db
+
+        # validate email unique
+        existing_user = UserRepository.get_user_by_email(data['email'])
+        if existing_user:
+            # context logger
+            print(f"Email {data['email']} already exists for user ID {existing_user.id}")
+            raise ValueError("Email already exists")
+
         user = User(username=data['username'], email=data['email'], password=data['password'])
         UserRepository.create_user(user)
 
