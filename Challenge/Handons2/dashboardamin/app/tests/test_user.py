@@ -5,9 +5,12 @@ from app.user.model import User
 
 class UsersApiTestCase(unittest.TestCase):
     def setUp(self):
-        self.app = create_app()
-        self.app.config['TESTING'] = True
-        self.app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///:memory:'
+        config = {
+            'TESTING': True,
+            # 'SQLALCHEMY_DATABASE_URI': 'sqlite:///:memory:'
+            'SQLALCHEMY_DATABASE_URI': 'sqlite:///shopeetest.db'
+        }
+        self.app = create_app(config)
         self.client = self.app.test_client()
 
         with self.app.app_context():
