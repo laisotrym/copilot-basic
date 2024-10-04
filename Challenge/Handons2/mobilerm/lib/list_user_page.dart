@@ -26,7 +26,7 @@ class _ListUserPageState extends State<ListUserPage> {
         final List<dynamic> data = json.decode(response.body);
         final List<Map<String, dynamic>> fetchedUsers = data.map((user) {
           return {
-            'name': user['name'],
+            'username': user['username'],
             'email': user['email'],
           };
         }).toList();
@@ -65,7 +65,7 @@ class _ListUserPageState extends State<ListUserPage> {
                       itemCount: users.length,
                       itemBuilder: (context, index) {
                         return ListTile(
-                          title: Text(users[index]['name']!),
+                          title: Text(users[index]['username']!),
                           subtitle: Text(users[index]['email']!),
                         );
                       },
