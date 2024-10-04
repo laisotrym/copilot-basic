@@ -1,9 +1,8 @@
 from flask import Blueprint, request, jsonify
 from app.user.service import UserService
-from flask_cors import CORS
+from app.utils.validate import Utils
 
 user_bp = Blueprint('users_api', __name__)
-CORS(user_bp)
 
 
 @user_bp.route('/users', methods=['GET'])
@@ -22,16 +21,19 @@ def get_user(user_id):
 def create_user():
     data = request.get_json()
     # validate username length > 5 and < 9
-    if len(data['username']) < 5 or len(data['username']) > 9:
-        return 'Username must be between 5 and 9 characters', 400
+
+    if not Utils.is_valid_username(data['username']):
+        return 'Username must be between 5 and 50 characters', 400
 
     # validate email using regex
-    import re
-    if not re.match(r"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$", data['email']):
+    if not Utils.is_valid_email(data['email']):
         return 'Invalid email', 400
 
-    user = UserService.create_user(data)
-    return jsonify(user.to_dict()), 201
+    try:
+        user = UserService.create_user(data)
+        return jsonify(user.to_dict()), 201
+    except Exception as e:
+        return str(e), 400
 
 
 @user_bp.route('/users/<int:user_id>', methods=['PUT'])
