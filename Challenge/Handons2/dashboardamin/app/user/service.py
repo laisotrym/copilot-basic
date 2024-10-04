@@ -20,7 +20,7 @@ class UserService:
         existing_user = UserRepository.get_user_by_email(data['email'])
         if existing_user:
             # context logger
-            print(f"Email {data['email']} already exists for user ID {existing_user.id}")
+            print(f"Create_User: Email {data['email']} already exists for user ID {existing_user.id}")
             raise ValueError("Email already exists")
 
         user = User(username=data['username'], email=data['email'], password=data['password'])

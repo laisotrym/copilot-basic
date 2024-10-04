@@ -32,6 +32,7 @@ void main() {
       expect(find.text('Jane Doe'), findsOneWidget);
     });
 
+    // error message on failed request
     testWidgets('Displays error message on failed request', (WidgetTester tester) async {
       final client = MockClient();
 
@@ -48,6 +49,7 @@ void main() {
       expect(find.text('Failed to load users'), findsOneWidget);
     });
 
+    // loading indicator while fetching users
     testWidgets('Displays loading indicator while fetching users', (WidgetTester tester) async {
       final client = MockClient();
 
@@ -71,6 +73,7 @@ void main() {
       expect(find.byType(CircularProgressIndicator), findsNothing);
     });
 
+    // empty state when no users are found    flutter test
     testWidgets('Displays empty state when no users are found', (WidgetTester tester) async {
       final client = MockClient();
 
